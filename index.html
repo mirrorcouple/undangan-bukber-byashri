@@ -15,13 +15,99 @@ body{
     font-family:'Poppins', sans-serif;
     color:white;
     overflow-x:hidden;
+    background:linear-gradient(to bottom,#061a14,#0f5132,#1f7a5c,#6bb7d6);
+}
 
-    /* BACKGROUND + MASJID MENYATU */
-    background:
-    url("masjid.png") no-repeat bottom center,
-    linear-gradient(to bottom,#0f5132,#1f7a5c,#6bb7d6);
+/* ===== BACKGROUND GLOBAL ===== */
+.background{
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    z-index:-1;
+    overflow:hidden;
+}
 
-    background-size: 420px auto, cover;
+/* Bulan realistis */
+.moon{
+    position:absolute;
+    top:80px;
+    right:100px;
+    width:120px;
+    height:120px;
+    background:radial-gradient(circle at 30% 30%, #fff 40%, #f7e6a3 70%);
+    border-radius:50%;
+    box-shadow:0 0 40px rgba(255,230,150,0.8);
+}
+
+/* Bintang */
+.star{
+    position:absolute;
+    width:3px;
+    height:3px;
+    background:white;
+    border-radius:50%;
+    animation:twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle{
+    from{opacity:0.2;}
+    to{opacity:1;}
+}
+
+/* Masjid besar */
+.masjid{
+    position:absolute;
+    bottom:-20px;
+    left:50%;
+    transform:translateX(-50%);
+    width:750px;
+    max-width:100%;
+    filter:drop-shadow(0 0 60px rgba(255,200,120,0.4));
+}
+
+/* Glow dari bawah */
+.glow{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:300px;
+    background:radial-gradient(circle at center bottom,
+        rgba(255,200,120,0.4),
+        transparent 70%);
+}
+
+/* Lentera */
+.lantern{
+    position:absolute;
+    top:0;
+    width:40px;
+    height:80px;
+    background:gold;
+    border-radius:20px;
+    box-shadow:0 0 20px rgba(255,200,120,0.7);
+    animation:swing 4s ease-in-out infinite;
+}
+
+.lantern:before{
+    content:"";
+    position:absolute;
+    top:-40px;
+    left:50%;
+    transform:translateX(-50%);
+    width:2px;
+    height:40px;
+    background:white;
+}
+
+.lantern.left{ left:80px; }
+.lantern.right{ right:80px; animation-delay:2s; }
+
+@keyframes swing{
+    0%{ transform:rotate(0deg); }
+    50%{ transform:rotate(8deg); }
+    100%{ transform:rotate(0deg); }
 }
 
 /* SECTION */
@@ -35,17 +121,13 @@ section{
     padding:30px;
 }
 
-/* ENVELOPE */
-.envelope{
-    cursor:pointer;
-    transition:0.6s ease;
-}
-
+/* Envelope */
 .envelope-img{
     width:320px;
     max-width:90%;
-    transition:0.8s ease;
-    filter:drop-shadow(0 15px 30px rgba(0,0,0,0.4));
+    cursor:pointer;
+    transition:0.8s;
+    filter:drop-shadow(0 15px 30px rgba(0,0,0,0.5));
 }
 
 .envelope.open .envelope-img{
@@ -53,21 +135,22 @@ section{
     opacity:0;
 }
 
-/* TITLE */
+/* Title */
 .big-title{
     font-family:'Playfair Display', serif;
-    font-size:40px;
+    font-size:44px;
     font-weight:700;
     letter-spacing:2px;
     margin-bottom:20px;
 }
 
 .subtitle-title{
-    font-size:16px;
-    opacity:0.9;
+    font-size:17px;
+    opacity:0.95;
     margin-bottom:30px;
 }
 
+/* Button */
 .button{
     padding:10px 25px;
     background:#d4a574;
@@ -78,11 +161,9 @@ section{
     transition:0.3s;
 }
 
-.button:hover{
-    transform:scale(1.05);
-}
+.button:hover{ transform:scale(1.05); }
 
-/* CARD */
+/* Card */
 .card{
     background:rgba(255,255,255,0.12);
     backdrop-filter:blur(15px);
@@ -90,13 +171,7 @@ section{
     border-radius:25px;
     max-width:420px;
     width:100%;
-    box-shadow:0 0 35px rgba(0,0,0,0.35);
-    animation:fadeUp 1s ease;
-}
-
-@keyframes fadeUp{
-    from{opacity:0; transform:translateY(30px);}
-    to{opacity:1; transform:translateY(0);}
+    box-shadow:0 0 35px rgba(0,0,0,0.5);
 }
 
 .title{
@@ -110,37 +185,33 @@ section{
     font-size:15px;
 }
 
-/* COUNTDOWN */
 #countdown{
     margin-top:20px;
     font-size:20px;
     font-weight:700;
 }
 
-/* KETUPAT */
-.ketupat{
-    position:fixed;
-    top:-20px;
-    font-size:18px;
-    opacity:0.5;
-    animation:fall linear infinite;
-    pointer-events:none;
-}
-
-@keyframes fall{
-    to{ transform:translateY(110vh); }
-}
-
-/* RESPONSIVE */
+/* Responsive */
 @media(max-width:600px){
-    body{
-        background-size: 300px auto, cover;
-    }
+    .masjid{ width:520px; }
+    .moon{ width:80px; height:80px; right:30px; }
+    .lantern.left{ left:20px; }
+    .lantern.right{ right:20px; }
 }
 </style>
 </head>
 
 <body>
+
+<div class="background">
+    <div class="moon"></div>
+    <div class="glow"></div>
+
+    <div class="lantern left"></div>
+    <div class="lantern right"></div>
+
+    <img src="masjid.png" class="masjid">
+</div>
 
 <section>
     <div class="envelope" onclick="openEnvelope()">
@@ -151,35 +222,26 @@ section{
 
 <section id="titleSection">
     <div class="big-title">
-        Buka Bersama <br>
-        & Pisah Sambut Karu
+        Buka Bersama <br>& Pisah Sambut Karu
     </div>
     <div class="subtitle-title">
         Dalam hangatnya Ramadan dan indahnya kebersamaan 🌙
     </div>
-
-    <button class="button" onclick="scrollToUndangan()">
-        Buka Undangan ⬇
-    </button>
+    <button class="button" onclick="scrollToUndangan()">Buka Undangan ⬇</button>
 </section>
 
 <section id="undangan">
     <div class="card">
         <div class="title">Assalamualaikum Wr. Wb.</div>
-
         <div class="detail">
             InshaAllah kita akan mengadakan buka bersama
             sekaligus acara pisah sambut Kepala Ruang.<br><br>
-
             📅 Jumat, 27 Februari 2026<br>
             ⏰ 16.00 WIB<br>
             📍 Ruang Kaspol Janoko<br>
             👗 Dresscode: Hitam & Hijab Cokelat / Gamis Hitam
         </div>
-
-        <button class="button" style="margin-top:25px;" onclick="scrollToCountdown()">
-            Lihat Countdown ⬇
-        </button>
+        <button class="button" style="margin-top:25px;" onclick="scrollToCountdown()">Lihat Countdown ⬇</button>
     </div>
 </section>
 
@@ -187,7 +249,6 @@ section{
     <div class="card">
         <div class="title">Menuju Hari H ⏳</div>
         <div id="countdown"></div>
-
         <p style="margin-top:20px;">
         Diharapkan seluruh personil dapat hadir 🙏🏻<br>
         Terima kasih atas kebersamaan dan partisipasinya.<br><br>
@@ -197,64 +258,42 @@ section{
 </section>
 
 <script>
+/* Generate banyak bintang */
+for(let i=0;i<70;i++){
+    let star=document.createElement("div");
+    star.className="star";
+    star.style.top=Math.random()*70+"%";
+    star.style.left=Math.random()*100+"%";
+    star.style.animationDelay=Math.random()*2+"s";
+    document.querySelector(".background").appendChild(star);
+}
+
 function openEnvelope(){
-    var env = document.querySelector(".envelope");
+    var env=document.querySelector(".envelope");
     env.classList.add("open");
     setTimeout(()=>{
-        document.getElementById("titleSection").scrollIntoView({
-            behavior:"smooth"
-        });
+        document.getElementById("titleSection").scrollIntoView({behavior:"smooth"});
     },700);
 }
 
 function scrollToUndangan(){
-    document.getElementById("undangan").scrollIntoView({
-        behavior:"smooth"
-    });
+    document.getElementById("undangan").scrollIntoView({behavior:"smooth"});
 }
 
 function scrollToCountdown(){
-    document.getElementById("countSection").scrollIntoView({
-        behavior:"smooth"
-    });
+    document.getElementById("countSection").scrollIntoView({behavior:"smooth"});
 }
 
-var eventDate = new Date("Feb 27, 2026 16:00:00").getTime();
-
+var eventDate=new Date("Feb 27, 2026 16:00:00").getTime();
 setInterval(function(){
-    var now = new Date().getTime();
-    var distance = eventDate - now;
-
-    var days = Math.floor(distance / (1000*60*60*24));
-    var hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
-    var minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
-
-    document.getElementById("countdown").innerHTML =
+    var now=new Date().getTime();
+    var distance=eventDate-now;
+    var days=Math.floor(distance/(1000*60*60*24));
+    var hours=Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+    var minutes=Math.floor((distance%(1000*60*60))/(1000*60));
+    document.getElementById("countdown").innerHTML=
     days+" Hari "+hours+" Jam "+minutes+" Menit";
 },1000);
-
-function createKetupat(){
-    var ketupat = document.createElement("div");
-    ketupat.classList.add("ketupat");
-    ketupat.innerHTML="💚";
-    ketupat.style.left=Math.random()*100+"vw";
-    ketupat.style.animationDuration=(7+Math.random()*4)+"s";
-    document.body.appendChild(ketupat);
-    setTimeout(()=>{ ketupat.remove(); },11000);
-}
-setInterval(createKetupat,2000);
-</script>
-
-<audio id="bgm" loop>
-<source src="ramadan.mp3" type="audio/mpeg">
-</audio>
-
-<script>
-const bgm=document.getElementById("bgm");
-document.addEventListener("click",()=>{
-bgm.volume=0.6;
-bgm.play();
-},{once:true});
 </script>
 
 </body>
