@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bukber & Pisah Sambut Karu</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+html{ scroll-behavior:smooth; }
+
+body{
+    margin:0;
+    font-family:'Poppins', sans-serif;
+    background:linear-gradient(to bottom,#0f5132,#1f7a5c,#6bb7d6);
+    color:white;
+    overflow-x:hidden;
+}
+
+section{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    text-align:center;
+    padding:30px;
+}
+
+/* ENVELOPE */
+.envelope{
+    cursor:pointer;
+    transition:0.6s ease;
+}
+
+.envelope-img{
+    width:320px;
+    max-width:90%;
+    transition:0.8s ease;
+    filter:drop-shadow(0 15px 30px rgba(0,0,0,0.4));
+}
+
+.envelope.open .envelope-img{
+    transform:scale(1.08);
+    opacity:0;
+}
+
+/* TITLE PAGE */
+.big-title{
+    font-family:'Playfair Display', serif;
+    font-size:40px;
+    font-weight:700;
+    letter-spacing:2px;
+    margin-bottom:20px;
+}
+
+.subtitle-title{
+    font-size:16px;
+    opacity:0.9;
+    margin-bottom:30px;
+}
+
+.button{
+    padding:10px 25px;
+    background:#d4a574;
+    border:none;
+    border-radius:25px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.button:hover{
+    transform:scale(1.05);
+}
+
+/* CARD */
+.card{
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(15px);
+    padding:40px;
+    border-radius:25px;
+    max-width:420px;
+    width:100%;
+    box-shadow:0 0 35px rgba(0,0,0,0.35);
+    animation:fadeUp 1s ease;
+}
+
+@keyframes fadeUp{
+    from{opacity:0; transform:translateY(30px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+.title{
+    font-size:22px;
+    font-weight:700;
+    margin-bottom:20px;
+}
+
+.detail{
+    line-height:1.8;
+    font-size:15px;
+}
+
+/* COUNTDOWN */
+#countdown{
+    margin-top:20px;
+    font-size:20px;
+    font-weight:700;
+}
+
+/* KETUPAT HALUS */
+.ketupat{
+    position:fixed;
+    top:-20px;
+    font-size:18px;
+    opacity:0.5;
+    animation:fall linear infinite;
+    pointer-events:none;
+}
+
+@keyframes fall{
+    to{ transform:translateY(110vh); }
+}
+
+/* MASJID FADE IN */
+.masjid-wrapper{
+    margin-top:30px;
+    display:flex;
+    justify-content:center;
+    opacity:0;
+    transform:translateY(30px);
+    transition:all 1.2s ease;
+}
+
+.masjid-wrapper.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.masjid-img{
+    width:380px;
+    max-width:90%;
+    opacity:0.18;
+}
+</style>
+</head>
+
+<body>
+
+<!-- SECTION 1 ENVELOPE -->
+<section>
+    <div class="envelope" onclick="openEnvelope()">
+        <img src="amplop-vintage.png" class="envelope-img">
+    </div>
+    <p style="margin-top:20px;opacity:0.8;">Klik amplop untuk membuka</p>
+</section>
+
+<!-- SECTION 2 JUDUL -->
+<section id="titleSection">
+    <div class="big-title">
+        Buka Bersama <br>
+        & Pisah Sambut Karu
+    </div>
+    <div class="subtitle-title">
+        Dalam hangatnya Ramadan dan indahnya kebersamaan 🌙
+    </div>
+
+    <button class="button" onclick="scrollToUndangan()">
+        Buka Undangan ⬇
+    </button>
+</section>
+
+<!-- SECTION 3 ISI -->
+<section id="undangan">
+    <div class="card">
+        <div class="title">Assalamualaikum Wr. Wb.</div>
+
+        <div class="detail">
+            InshaAllah kita akan mengadakan buka bersama
+            sekaligus acara pisah sambut Kepala Ruang.<br><br>
+
+            📅 Jumat, 27 Februari 2026<br>
+            ⏰ 16.00 WIB<br>
+            📍 Ruang Kaspol Janoko<br>
+            👗 Dresscode: Hitam & Hijab Cokelat / Gamis Hitam
+        </div>
+
+        <button class="button" style="margin-top:25px;" onclick="scrollToCountdown()">
+            Lihat Countdown ⬇
+        </button>
+    </div>
+</section>
+
+<!-- SECTION 4 COUNTDOWN -->
+<section id="countSection">
+    <div class="card">
+        <div class="title">Menuju Hari H ⏳</div>
+        <div id="countdown"></div>
+
+        <p style="margin-top:20px;">
+        Diharapkan seluruh personil dapat hadir 🙏🏻<br>
+        Terima kasih atas kebersamaan dan partisipasinya.<br><br>
+        Wassalamualaikum Wr. Wb.
+        </p>
+    </div>
+
+    <div class="masjid-wrapper" id="masjidReveal">
+        <img src="masjid.png" class="masjid-img">
+    </div>
+</section>
+
+<script>
+
+/* OPEN ENVELOPE */
+function openEnvelope(){
+    var env = document.querySelector(".envelope");
+    env.classList.add("open");
+
+    setTimeout(()=>{
+        document.getElementById("titleSection").scrollIntoView({
+            behavior:"smooth"
+        });
+    },700);
+}
+
+function scrollToUndangan(){
+    document.getElementById("undangan").scrollIntoView({
+        behavior:"smooth"
+    });
+}
+
+function scrollToCountdown(){
+    document.getElementById("countSection").scrollIntoView({
+        behavior:"smooth"
+    });
+}
+
+/* COUNTDOWN */
+var eventDate = new Date("Feb 27, 2026 16:00:00").getTime();
+
+setInterval(function(){
+    var now = new Date().getTime();
+    var distance = eventDate - now;
+
+    var days = Math.floor(distance / (1000*60*60*24));
+    var hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
+    var minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
+
+    document.getElementById("countdown").innerHTML =
+    days+" Hari "+hours+" Jam "+minutes+" Menit";
+},1000);
+
+/* KETUPAT LEMBUT */
+function createKetupat(){
+    var ketupat = document.createElement("div");
+    ketupat.classList.add("ketupat");
+    ketupat.innerHTML="💚";
+    ketupat.style.left=Math.random()*100+"vw";
+    ketupat.style.animationDuration=(7+Math.random()*4)+"s";
+    document.body.appendChild(ketupat);
+
+    setTimeout(()=>{ ketupat.remove(); },11000);
+}
+setInterval(createKetupat,2000);
+
+/* MASJID FADE IN */
+const masjid = document.getElementById("masjidReveal");
+
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting){
+            masjid.classList.add("show");
+        }
+    });
+}, { threshold: 0.3 });
+
+observer.observe(document.getElementById("countSection"));
+
+</script>
+
+</body>
+</html>
