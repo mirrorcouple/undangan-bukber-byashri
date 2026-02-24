@@ -62,8 +62,9 @@ body{
     bottom:-20px;
     left:50%;
     transform:translateX(-50%);
-    width:750px;
-    max-width:100%;
+    width:850px; /* sedikit lebih besar */
+    max-width:110%;
+    opacity:0.55; /* tingkat transparansi */
     filter:drop-shadow(0 0 60px rgba(255,200,120,0.4));
 }
 
@@ -296,5 +297,17 @@ setInterval(function(){
 },1000);
 </script>
 
-</body>
+<audio id="bgm" loop>
+<source src="ramadan.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const bgm=document.getElementById("bgm");
+
+document.addEventListener("click",()=>{
+    bgm.volume=0.6;
+    bgm.play().catch(()=>{});
+},{once:true});
+</script></body>
 </html>
+
