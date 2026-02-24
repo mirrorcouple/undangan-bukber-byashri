@@ -3,168 +3,157 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Undangan Lebaran</title>
+
+<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
 <style>
-body{
+*{
     margin:0;
-    font-family: 'Georgia', serif;
-    background:#0f172a;
-    color:white;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins', sans-serif;
+    background:#f8f5f0;
     text-align:center;
     overflow-x:hidden;
 }
 
-/* SECTION */
-section{
+/* HALAMAN UMUM */
+.section{
     min-height:100vh;
     display:flex;
+    flex-direction:column;
     justify-content:center;
     align-items:center;
-    flex-direction:column;
     padding:40px 20px;
-    box-sizing:border-box;
 }
 
-/* ENVELOPE */
-#envelopeSection{
-    background:#0f172a;
+/* JUDUL LATIN */
+.title{
+    font-family:'Playfair Display', serif;
+    font-size:42px;
+    letter-spacing:2px;
+    margin-bottom:20px;
 }
 
-.envelope-img{
-    width:280px;
+/* TOMBOL */
+button{
+    padding:12px 28px;
+    border:none;
+    background:#b48b3c;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    border-radius:30px;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#8f6d2c;
+}
+
+/* AMplop */
+.envelope{
+    width:220px;
     cursor:pointer;
     transition:0.5s;
 }
 
-.envelope-img:hover{
+.envelope:hover{
     transform:scale(1.05);
-}
-
-/* TITLE PAGE */
-#titleSection{
-    background:#0f172a;
-}
-
-.title{
-    font-size:38px;
-    letter-spacing:3px;
-    font-weight:bold;
-}
-
-/* CONTENT CARD */
-.card{
-    background:rgba(255,255,255,0.05);
-    padding:30px;
-    border-radius:20px;
-    max-width:400px;
-    backdrop-filter:blur(10px);
-}
-
-/* COUNTDOWN */
-#countdown{
-    font-size:22px;
-    font-weight:bold;
-    margin-top:15px;
 }
 
 /* FOOTER MASJID */
 .footer-masjid{
+    position:fixed;
+    bottom:0;
+    left:0;
     width:100%;
-    margin-top:40px;
-    line-height:0;
+    height:180px;
+    background:url('masjid.png') no-repeat center bottom;
+    background-size:cover;
+    opacity:1;
+    pointer-events:none;
 }
 
-.footer-masjid img{
-    width:100%;
-    height:200px;
-    object-fit:cover;
-    display:block;
-    opacity:1;
+/* COUNTDOWN */
+.countdown{
+    font-size:22px;
+    margin-top:20px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- 🎵 AUDIO -->
-<audio id="bgMusic" loop>
-    <source src="musik.mp3" type="audio/mpeg">
-</audio>
+<!-- HALAMAN 1 - OPENING AMPlop -->
+<div class="section" id="opening">
+    <h1 class="title">Undangan Lebaran</h1>
+    <img src="amplop.png" class="envelope" onclick="bukaUndangan()">
+    <p style="margin-top:15px;">Klik amplop untuk membuka</p>
+</div>
 
-<!-- 🌙 ENVELOPE -->
-<section id="envelopeSection">
-    <img src="amplop.png" class="envelope-img" onclick="openInvitation()">
-    <p>Klik amplop untuk membuka</p>
-</section>
+<!-- HALAMAN 2 - JUDUL LAGI -->
+<div class="section" id="judul" style="display:none;">
+    <h1 class="title">Bukber & Pisah Sambut</h1>
+    <button onclick="lanjut()">Buka Undangan</button>
+</div>
 
-<!-- 🌙 TITLE -->
-<section id="titleSection" style="display:none;">
-    <div class="title">Eid Mubarak 1447 H</div>
-    <p>Scroll ke bawah</p>
-</section>
+<!-- HALAMAN 3 - ISI UNDANGAN -->
+<div class="section" id="isi" style="display:none;">
+    <h2 class="title" style="font-size:30px;">Assalamu'alaikum</h2>
+    <p>Kami mengundang Anda untuk hadir dalam acara</p>
+    <p style="margin:15px 0;font-weight:500;">Buka Bersama & Pisah Sambut</p>
 
-<!-- 🌙 ISI UNDANGAN -->
-<section id="contentSection" style="display:none;">
-    <div class="card">
-        <h2>Undangan Buka Bersama</h2>
-        <p>
-        Dengan penuh kebahagiaan, kami mengundang Anda untuk hadir dalam acara buka bersama.
-        </p>
-        <p>
-        🗓 10 April 2026<br>
-        📍 Kediaman Kami<br>
-        ⏰ 17.30 WIB
-        </p>
-    </div>
-</section>
+    <p>Sabtu, 20 April 2026</p>
+    <p>Pukul 17.00 WIB</p>
 
-<!-- 🌙 COUNTDOWN -->
-<section id="countSection" style="display:none;">
-    <div class="card">
-        <h2>Menuju Hari Bahagia</h2>
-        <div id="countdown"></div>
-    </div>
-</section>
+    <div class="countdown" id="countdown"></div>
+</div>
 
-<!-- 🕌 FOOTER MASJID -->
-<footer class="footer-masjid">
-    <img src="masjid.png" alt="Masjid">
-</footer>
+<!-- Musik -->
+<audio id="musik" src="musik.mp3"></audio>
+
+<!-- Footer Masjid -->
+<div class="footer-masjid"></div>
 
 <script>
-function openInvitation(){
-    document.getElementById("envelopeSection").style.display="none";
-    document.getElementById("titleSection").style.display="flex";
-    document.getElementById("contentSection").style.display="flex";
-    document.getElementById("countSection").style.display="flex";
-    
-    // PLAY MUSIC
-    document.getElementById("bgMusic").play();
+function bukaUndangan(){
+    document.getElementById("opening").style.display="none";
+    document.getElementById("judul").style.display="flex";
+    document.getElementById("musik").play();
+}
+
+function lanjut(){
+    document.getElementById("judul").style.display="none";
+    document.getElementById("isi").style.display="flex";
 }
 
 /* COUNTDOWN */
-var eventDate = new Date("April 10, 2026 17:30:00").getTime();
+var targetDate = new Date("April 20, 2026 17:00:00").getTime();
 
 var x = setInterval(function(){
     var now = new Date().getTime();
-    var distance = eventDate - now;
+    var distance = targetDate - now;
 
-    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    var days = Math.floor(distance / (1000*60*60*24));
+    var hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
+    var minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
 
     document.getElementById("countdown").innerHTML =
-    days + " Hari " + hours + " Jam " + minutes + " Menit " + seconds + " Detik ";
+        days + " Hari " + hours + " Jam " + minutes + " Menit";
 
     if(distance < 0){
         clearInterval(x);
         document.getElementById("countdown").innerHTML = "Acara Dimulai";
     }
-}, 1000);
+},1000);
 </script>
 
 </body>
 </html>
-
