@@ -16,6 +16,7 @@ body{
     background:linear-gradient(to bottom,#0f5132,#1f7a5c,#6bb7d6);
     color:white;
     overflow-x:hidden;
+    padding-bottom:240px; /* supaya tidak tertutup footer */
 }
 
 section{
@@ -110,7 +111,7 @@ section{
     font-weight:700;
 }
 
-/* KETUPAT HALUS */
+/* KETUPAT */
 .ketupat{
     position:fixed;
     top:-20px;
@@ -124,25 +125,38 @@ section{
     to{ transform:translateY(110vh); }
 }
 
-/* MASJID FADE IN */
-.masjid-wrapper{
-    margin-top:30px;
+/* ===== FOOTER MASJID ELEGAN ===== */
+.masjid-footer{
+    position:fixed;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:100%;
     display:flex;
     justify-content:center;
-    opacity:0;
-    transform:translateY(30px);
-    transition:all 1.2s ease;
+    align-items:flex-end;
+    pointer-events:none;
+    z-index:1;
 }
 
-.masjid-wrapper.show{
-    opacity:1;
-    transform:translateY(0);
+.footer-gradient{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:260px;
+    background:linear-gradient(to top,
+        #0f5132 10%,
+        #1f7a5c 45%,
+        rgba(31,122,92,0.6) 75%,
+        transparent 100%);
 }
 
-.masjid-img{
-    width:380px;
+.masjid-img-clear{
+    width:420px;
     max-width:90%;
-    opacity:0.18;
+    position:relative;
+    z-index:2;
+    filter:drop-shadow(0 0 25px rgba(255,215,150,0.35));
 }
 </style>
 </head>
@@ -205,19 +219,18 @@ section{
         Wassalamualaikum Wr. Wb.
         </p>
     </div>
-
-    <div class="masjid-wrapper" id="masjidReveal">
-        <img src="masjid.png" class="masjid-img">
-    </div>
 </section>
 
-<script>
+<!-- FOOTER MASJID -->
+<div class="masjid-footer">
+    <div class="footer-gradient"></div>
+    <img src="masjid.png" class="masjid-img-clear">
+</div>
 
-/* OPEN ENVELOPE */
+<script>
 function openEnvelope(){
     var env = document.querySelector(".envelope");
     env.classList.add("open");
-
     setTimeout(()=>{
         document.getElementById("titleSection").scrollIntoView({
             behavior:"smooth"
@@ -237,7 +250,6 @@ function scrollToCountdown(){
     });
 }
 
-/* COUNTDOWN */
 var eventDate = new Date("Feb 27, 2026 16:00:00").getTime();
 
 setInterval(function(){
@@ -252,7 +264,6 @@ setInterval(function(){
     days+" Hari "+hours+" Jam "+minutes+" Menit";
 },1000);
 
-/* KETUPAT LEMBUT */
 function createKetupat(){
     var ketupat = document.createElement("div");
     ketupat.classList.add("ketupat");
@@ -260,24 +271,9 @@ function createKetupat(){
     ketupat.style.left=Math.random()*100+"vw";
     ketupat.style.animationDuration=(7+Math.random()*4)+"s";
     document.body.appendChild(ketupat);
-
     setTimeout(()=>{ ketupat.remove(); },11000);
 }
 setInterval(createKetupat,2000);
-
-/* MASJID FADE IN */
-const masjid = document.getElementById("masjidReveal");
-
-const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        if(entry.isIntersecting){
-            masjid.classList.add("show");
-        }
-    });
-}, { threshold: 0.3 });
-
-observer.observe(document.getElementById("countSection"));
-
 </script>
 
 <audio id="bgm" loop>
@@ -286,11 +282,11 @@ observer.observe(document.getElementById("countSection"));
 
 <script>
 const bgm=document.getElementById("bgm");
-
 document.addEventListener("click",()=>{
 bgm.volume=0.6;
 bgm.play();
 },{once:true});
-</script></body>
-</html>
+</script>
 
+</body>
+</html>
